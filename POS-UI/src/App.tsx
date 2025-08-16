@@ -1,23 +1,29 @@
 import { 
-  BrowserRouter as Router,
   Routes,
-  Route
+  Route, 
+  Navigate
  } from 'react-router-dom';
 
 import './App.css'
-import SignIn from './pages/SignIn';
-import POSPage from './pages/POSPage';
+import SignIn from './components/public/SignIn';
+import POSPage from './components/private/POSPage';
+import NotFound from './components/shared/NotFound';
+import { Authenticate } from './components/shared/Authenticate';
 
 function App() {
   
 
   return (
-    <Router>
       <Routes>
-        <Route path= "/" element={<SignIn/>}/>
-        <Route path= "/pos" element={<POSPage/>}/>
+        <Route path= "/" element={<Navigate to = "/pos" />}/>
+        <Route>
+          <Route path = "/signin" element = {<SignIn />} />
+          <Route path = "*" element = {<NotFound />} />
+        </Route>
+        <Route element = {<Authenticate />} >
+          <Route path= "/pos" element={<POSPage/>} />
+        </Route>
       </Routes>
-    </Router>
   )
 }
 

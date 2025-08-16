@@ -1,13 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext, useState, type ChangeEvent } from "react";
+import { AuthContext } from "../../assets/memory/auth";
+import { useNavigate } from "react-router-dom";
 //import './App.css'
 
 function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const context = useContext(AuthContext)
+  if(!context){
+    throw new Error("Authenticate debe usarse dentro de un AuthProvider");
+  }
+  const [auth, sendAuth] = context;
+
+  const enviar = async (form:Object) => {
+    sendAuth({type: 'put', token: '12345'});
+    navigate('/pos');
+  }
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  
+  const {email, password} = form;
+
+  const onChange = (event: ChangeEvent, prop: string) => {
+    const value = (event.target as HTMLInputElement).value;
+    setForm((estado) => ({ ...estado, [prop]: value}));
+  };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ email, password });
+    enviar(form);
   };
 
   return (
@@ -23,7 +49,7 @@ function SignIn() {
               type="email"
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => onChange(e, "email")}
               className="login-input"
               required
             />
@@ -37,7 +63,7 @@ function SignIn() {
               type="password"
               placeholder="••••••••"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => onChange(e, "password")}
               className="login-input"
               required
             />

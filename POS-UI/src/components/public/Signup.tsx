@@ -1,9 +1,10 @@
 import React, { useContext, useState, type ChangeEvent } from "react";
 import { AuthContext } from "../../assets/memory/auth";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../../services/Auth";
 //import './App.css'
 
-function SignIn() {
+function Signup() {
 
   const navigate = useNavigate();
 
@@ -13,8 +14,9 @@ function SignIn() {
   }
   const [auth, sendAuth] = context;
 
-  const enviar = async (form:Object) => {
-    sendAuth({type: 'put', token: '12345'});
+  const send = async (form:any) => {
+    const {token} = await signup(form);
+    sendAuth({ type: 'put', token: token! });
     navigate('/pos');
   }
 
@@ -33,13 +35,13 @@ function SignIn() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    enviar(form);
+    send(form);
   };
 
   return (
     <div className="main-container">
       <div className="card-login">
-        <h2 className="">Login</h2>
+        <h2 className="">Sign Up</h2>
         <form className="login-form" onSubmit={handleSubmit}>
           <div>
             <label className="login-label">
@@ -73,16 +75,16 @@ function SignIn() {
             type="submit"
             className="sign-in-button"
           >
-            Sign In
+            Sign Up
           </button>
         </form>
         <p className="text-center text-sm text-gray-500 mt-4">
-          Don’t have an account?{" "}
+          Already a user? {" "}
           <a
-            href="#"
+            href="/signin"
             className="text-gray-800 font-medium hover:underline"
           >
-            Sign up
+            Log in
           </a>
         </p>
       </div>
@@ -90,4 +92,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default Signup

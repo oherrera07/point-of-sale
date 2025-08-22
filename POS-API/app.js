@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }).unless({path: ['/api/signup', '/api/login']}));
+app.use(jwt({ secret: process.env.SECRET, algorithms: ["HS256"] }).unless({path: ['/api/signup', '/api/login']})); //protege todas las rutas menos signup y login
 
 
 app.use('/', indexRouter);

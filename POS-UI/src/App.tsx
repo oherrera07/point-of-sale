@@ -5,10 +5,11 @@ import {
  } from 'react-router-dom';
 
 import './App.css'
-import SignIn from './components/public/SignIn';
+import Login from './components/public/Login';
 import POSPage from './components/private/POSPage';
 import NotFound from './components/shared/NotFound';
 import { Authenticate } from './components/shared/Authenticate';
+import Signup from './components/public/Signup';
 
 function App() {
   
@@ -17,7 +18,8 @@ function App() {
       <Routes>
         <Route path= "/" element={<Navigate to = "/pos" />}/>
         <Route>
-          <Route path = "/signin" element = {<SignIn />} />
+          <Route path = "/signin" element = {<Login />} />
+          <Route path = "/signup" element = {<Signup />} />
           <Route path = "*" element = {<NotFound />} />
         </Route>
         <Route element = {<Authenticate />} >
